@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mom's 50th Birthday — Cake Cutting</title>
+  <style>
+    :root{ --bg:#fff6f8; --card:#fff; --accent:#ff6b6b; --cream:#ffe9d6; --choco:#6b3f2f }
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,var(--bg),#fff); margin:0; padding:40px; display:flex; align-items:center; justify-content:center; min-height:100vh;}
+
+    .wrap{width:920px; max-width:96%; background:var(--card); border-radius:14px; box-shadow:0 8px 30px rgba(107,63,47,0.08); padding:28px; text-align:center}
+    h1{margin:6px 0 12px; font-size:28px; color:#333}
+    p.lead{margin:0 0 18px; color:#666}
+
+    .stage{position:relative; height:360px; display:flex; align-items:center; justify-content:center}
+    .cake{position:relative; width:420px; height:240px;}
+    .plate{position:absolute; left:50%; transform:translateX(-50%); bottom:-12px; width:480px; height:36px; background:linear-gradient(#f2f2f2,#e6e6e6); border-radius:50%; box-shadow:0 6px 12px rgba(0,0,0,0.08)}
+
+    .layer{position:absolute; left:50%; transform:translateX(-50%); border-radius:18px}
+    .layer.bottom{width:360px; height:110px; bottom:0; background:linear-gradient(var(--choco), #4d2b20); box-shadow:inset 0 8px 12px rgba(255,255,255,0.02)}
+    .layer.middle{width:340px; height:70px; bottom:82px; background:linear-gradient(var(--cream), #ffe6cc)}
+    .layer.top{width:320px; height:44px; bottom:150px; background:linear-gradient(var(--choco), #5a392a)}
+
+
+/* golden candle styling (generated dynamically) */
+.candles{position:absolute; left:50%; transform:translateX(-50%); bottom:214px; width:360px; height:120px; pointer-events:none}
+.candle{position:absolute; width:6px; height:42px; border-radius:3px; background:linear-gradient(180deg,var(--gold2),var(--gold1)); box-shadow:0 2px 6px rgba(0,0,0,0.12); transform-origin:50% 100%; display:flex; align-items:flex-end; justify-content:center}
+.candle .wick{width:2px; height:8px; background:#222; margin-bottom:2px; border-radius:1px}
+.flame{position:absolute; bottom:42px; left:50%; transform:translateX(-50%); width:8px; height:12px; background:linear-gradient(#fff176,#ff8a00); border-radius:50% 50% 50% 50% / 60% 60% 40% 40%; box-shadow:0 6px 14px rgba(255,140,0,0.16); filter:drop-shadow(0 2px 6px rgba(255,150,50,0.25)); animation: flicker 900ms infinite}
+@keyframes flicker{0%{transform:translateX(-50%) scale(0.92)}50%{transform:translateX(-50%) scale(1.06)}100%{transform:translateX(-50%) scale(0.95)}}
+
+
+/* gold topper */
+.topper{position:absolute; left:50%; transform:translateX(-50%); bottom:270px; display:flex; align-items:center; gap:8px}
+.topper .plate{display:none}
+.topper .num{font-size:46px; font-weight:800; color:var(--gold1); text-shadow:0 6px 18px rgba(255,215,0,0.25); transform:translateY(-6px)}
+.sparkle{width:10px; height:10px; background:radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0.6) 30%, transparent 60%); border-radius:50%; box-shadow:0 0 12px rgba(255,215,0,0.5); animation: sparkle 1600ms infinite}
+@keyframes sparkle{0%{opacity:0.2; transform:scale(0.8)}50%{opacity:1; transform:scale(1.15)}100%{opacity:0.2; transform:scale(0.9)}}
+
+
+.slice{position:absolute; left:50%; transform:translateX(-50%); bottom:0; width:0; height:0; overflow:visible; transition: all .9s ease; pointer-events:none}
+.slice.open{width:220px; transform:translateX(-26%); bottom:0}
+
+
+.message{opacity:0; transform:translateY(8px); transition:all .9s cubic-bezier(.2,.9,.2,1); margin-top:18px}
+.message.show{opacity:1; transform:translateY(0)}
+    .frosting{position:absolute; width:8px; height:8px; background:var(--accent); border-radius:50%; box-shadow:0 2px 6px rgba(0,0,0,0.12)}
+    .frosting.f1{left:40%; bottom:210px}
+    .frosting.f2{left:49%; bottom:220px}
+    .frosting.f3{left:58%; bottom:210px}
+
+    .candles{position:absolute; left:50%; transform:translateX(-50%); bottom:192px; display:flex; gap:10px}
+    .candle{width:8px; height:34px; background:#fff; border-radius:3px; position:relative; box-shadow:inset 0 -6px rgba(0,0,0,0.06)}
+    .candle:after{content:''; position:absolute; left:50%; transform:translateX(-50%); bottom:34px; width:6px; height:8px; background:linear-gradient(#ffd46b,#ffb74d); border-radius:50%}
+    .flame{position:absolute; left:50%; transform:translateX(-50%); bottom:40px; width:6px; height:10px; background:linear-gradient(#ffd46b,#ff5722); border-radius:50% 50% 50% 50% / 60% 60% 40% 40%; box-shadow:0 6px 10px rgba(255,100,0,0.12)}
+
+    .knife{position:absolute; right:-40px; top:40px; width:220px; height:36px; transform-origin:20% 50%; transition:transform .7s ease}
+    .knife .blade{width:140px; height:6px; background:linear-gradient(#e6e6e6,#bcbcbc); border-radius:3px; position:absolute; left:0; top:12px}
+    .knife .handle{width:68px; height:28px; background:#3b3b3b; right:0; top:4px; border-radius:6px}
+
+    .slice{position:absolute; left:50%; transform:translateX(-50%); bottom:0; width:0; height:0; overflow:visible; transition: all .9s ease; pointer-events:none}
+    .slice.open{width:180px; transform:translateX(-30%); bottom:0}
+
+    .message{opacity:0; transform:translateY(8px); transition:all .9s cubic-bezier(.2,.9,.2,1); margin-top:18px}
+    .message.show{opacity:1; transform:translateY(0)}
+
+    .controls{margin-top:18px; display:flex; gap:12px; justify-content:center}
+    button{background:var(--accent); color:white; border:0; padding:10px 16px; border-radius:10px; font-weight:600; cursor:pointer}
+    button.secondary{background:#f3f3f3; color:#333}
+
+    canvas.confetti{position:absolute; inset:0; pointer-events:none}
+
+    footer{margin-top:18px; font-size:13px; color:#666}
+
+    @media (max-width:520px){ .cake{width:320px;height:200px} .knife{display:none} }
+
+.envelope{position:absolute;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);width:200px;height:140px;background:linear-gradient(135deg,var(--gold1),var(--gold2));border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;opacity:0;transition:transform 1s ease,opacity 1s ease;z-index:10}
+.envelope.open{transform:translateX(-50%) translateY(0);opacity:1;animation:bounceIn 1s ease forwards}
+@keyframes bounceIn{0%{transform:translateX(-50%) translateY(100px) scale(0.8)}60%{transform:translateX(-50%) translateY(-10px) scale(1.05)}100%{transform:translateX(-50%) translateY(0) scale(1)}}
+.envelope .messageText{color:#fff;font-size:18px;font-weight:600;text-align:center;animation:glow 2s infinite alternate}
+  </style>
+</head>
+<body>
+
+  <audio id="bgMusic" loop>
+    <source src="D:\Mom_birthday\music\birthday_song.mp3.mp3"type="audio/mpeg">
+  </audio>
+
+  <div class="wrap">
+    <h1>Mom's 50th Birthday — Cake Cutting</h1>
+    <p class="lead">Click <strong>Cut Cake</strong> to slice the cake — surprise message, confetti, and music included 🎶🎉</p>
+
+    <div class="stage">
+      <canvas class="confetti" id="confetti"></canvas>
+
+      <div class="cake" id="cake">
+        <div class="layer bottom"></div>
+        <div class="layer middle"></div>
+        <div class="layer top"></div>
+<!-- topper showing 50 -->
+<div class="topper" aria-hidden>
+<div class="sparkle" style="transform:translateY(6px)"></div>
+<div class="num">50</div>
+<div class="sparkle" style="transform:translateY(6px)"></div>
+</div>
+        <div class="candles" aria-hidden>
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+        </div>
+<!-- candles container; candles created by JS -->
+<div class="candles" id="candles" aria-hidden></div>
+        <div class="plate" aria-hidden></div>
+
+        <div class="frosting f1"></div>
+        <div class="frosting f2"></div>
+        <div class="frosting f3"></div>
+
+        <div class="slice" id="slice">
+          <svg width="200" height="200" viewBox="0 0 200 200" style="overflow:visible">
+            <path id="slicePath" d="M10 150 C60 30, 140 30, 190 150 L10 150 Z" fill="#6b3f2f"></path>
+            <path d="M10 150 C60 50, 140 50, 190 150 L10 150 Z" fill="#ffe6cc" opacity="0.95"></path>
+          </svg>
+        </div>
+
+      </div>
+
+      <div class="knife" id="knife" role="img" aria-label="knife">
+        <div class="blade"></div>
+        <div class="handle"></div>
+      </div>
+    </div>
+<div class="envelope" id="envelope"><div class="messageText">Happy 50th Birthday Mom 💖</div></div>
+   
+ <div class="controls">
+      <button id="cutBtn">Cut Cake</button>
+      <button id="resetBtn" class="secondary">Reset</button>
+    </div>
+
+    <div class="message" id="message">
+      <h2 style="margin:6px 0">Happy 50th Birthday, Mom! 🎂</h2>
+      <p style="margin:0">Wishing you love, health & endless joy. — With Happiness always From RAYAN & DAD ❤️</p>
+    </div>
+
+    <footer>
+      To publish: create a GitHub repo and upload this single HTML file. Then enable GitHub Pages from the repository settings to get a live link (example: <em>https://your-username.github.io/repo-name/</em>)
+    </footer>
+  </div>
+
+  <script>
+    const cutBtn = document.getElementById('cutBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const knife = document.getElementById('knife');
+    const slice = document.getElementById('slice');
+    const message = document.getElementById('message');
+    const confettiCanvas = document.getElementById('confetti');
+    const bgMusic = document.getElementById('bgMusic');
+     
+    const ctx = confettiCanvas.getContext('2d');
+     const envelope=document.getElementById('envelope');
+    function fitCanvas(){
+      const stage = document.querySelector('.stage');
+      confettiCanvas.width = stage.clientWidth;
+      confettiCanvas.height = stage.clientHeight;
+      confettiCanvas.style.left = stage.offsetLeft + 'px';
+      confettiCanvas.style.top = stage.offsetTop + 'px';
+    }
+    fitCanvas();
+    window.addEventListener('resize', fitCanvas);
+
+    let confettiParticles = [];
+    function spawnConfetti(){
+      confettiParticles = [];
+      const colors = ['#ff6b6b','#ffd46b','#6bffb8','#6bb3ff','#c46bff'];
+      for(let i=0;i<80;i++){
+        confettiParticles.push({
+          x: Math.random()*confettiCanvas.width,
+          y: -Math.random()*confettiCanvas.height*0.6,
+          vy: 1 + Math.random()*3,
+          vx: -1 + Math.random()*2,
+          size: 6 + Math.random()*8,
+          color: colors[Math.floor(Math.random()*colors.length)],
+          rot: Math.random()*360,
+          rotSpeed: -5 + Math.random()*10
+        });
+      }
+      renderConfetti();
+    }
+
+    let confettiRAF = null;
+    function renderConfetti(){
+      ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+      for(const p of confettiParticles){
+        p.x += p.vx; p.y += p.vy; p.rot += p.rotSpeed;
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        ctx.rotate(p.rot*Math.PI/180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.6);
+        ctx.restore();
+      }
+function cutCake(){curtainLeft.classList.add('open');curtainRight.classList.add('open');message.classList.add('show');spawnConfetti();bgMusic.play().catch(()=>{});envelope.classList.add('open');cutBtn.disabled=true;}
+function resetAll(){curtainLeft.classList.remove('open');curtainRight.classList.remove('open');message.classList.remove('show');confettiParticles=[];ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);if(confettiRAF)cancelAnimationFrame(confettiRAF);cutBtn.disabled=false;bgMusic.pause();bgMusic.currentTime=0;envelope.classList.remove('open');}
+      confettiParticles = confettiParticles.filter(p => p.y < confettiCanvas.height + 40);
+      if(confettiParticles.length>0) confettiRAF = requestAnimationFrame(renderConfetti);
+      else { ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); cancelAnimationFrame(confettiRAF); confettiRAF=null }
+    }
+
+
+
+
+    function cutCake(){
+      knife.style.transform = 'rotate(-28deg) translateX(-18px)';
+      slice.classList.add('open');
+      setTimeout(()=> message.classList.add('show'), 700);
+      spawnConfetti();
+      bgMusic.play();
+      cutBtn.disabled = true; cutBtn.style.opacity = 0.8
+    }
+
+    function resetAll(){
+      knife.style.transform = 'rotate(0deg)';
+      slice.classList.remove('open');
+      message.classList.remove('show');
+      confettiParticles = [];
+      ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+      if(confettiRAF) cancelAnimationFrame(confettiRAF);
+      cutBtn.disabled = false; cutBtn.style.opacity = 1;
+      bgMusic.pause();
+      bgMusic.currentTime = 0;
+    }
+
+    cutBtn.addEventListener('click', cutCake);
+    resetBtn.addEventListener('click', resetAll);
+
+
+  </script>
+</body>
+</html>
